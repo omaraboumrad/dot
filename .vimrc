@@ -10,6 +10,8 @@ set ts=4 expandtab
 set shiftwidth=4
 set softtabstop=4
 
+set pastetoggle=<F2>
+
 " tab remap
 nmap <C-t> :tabnew<CR>
 nmap <C-l> :tabnext<CR>
