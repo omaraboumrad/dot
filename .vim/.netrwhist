@@ -1,4 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/xterm/.venv/ibtakr/ibtakr/projects/templatetags'
-let g:netrw_dirhist_2='/home/xterm/.vim/snippets'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/xterm/.venv/npc/npc/production/sampleprocess'
+let g:netrw_dirhist_2='/home/xterm/.venv/npc/npc/production/edgemill'
+let g:netrw_dirhist_3='/home/xterm/.venv/npc/npc/production/sampleprocess'
