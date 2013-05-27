@@ -1,7 +1,6 @@
 set nu
 syntax on
 
-call pathogen#infect()
 filetype plugin indent on
 
 " indent stuff
