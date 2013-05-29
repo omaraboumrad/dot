@@ -7,7 +7,7 @@ theme = {}
 theme.font          = "Monospace 10"
 
 theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
+theme.bg_focus      = "#333333"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 
@@ -18,7 +18,7 @@ theme.fg_minimize   = "#ffffff"
 
 theme.border_width  = "2"
 theme.border_normal = "#000000"
-theme.border_focus  = "#FF0000"
+theme.border_focus  = "#D64578"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
