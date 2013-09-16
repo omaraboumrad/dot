@@ -12,7 +12,7 @@ theme.default_themes_path = "/usr/share/awesome/themes"
 theme.colors = {}
 theme.colors.base3   = "#002b36ff"
 theme.colors.base2   = "#073642ff"
-theme.colors.base1   = "#586e75ff"
+theme.colors.base1   = "#003b4cff"
 theme.colors.base0   = "#657b83ff"
 theme.colors.base00  = "#839496ff"
 theme.colors.base01  = "#93a1a1ff"
@@ -47,7 +47,7 @@ theme.bg_systray = theme.bg_normal
 -- {{{ Borders
 theme.border_width  = "2"
 theme.border_normal = theme.bg_normal
-theme.border_focus  = theme.bg_focus
+theme.border_focus  = "#006785ff"
 theme.border_marked = theme.bg_urgent
 -- }}}
 
