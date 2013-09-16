@@ -39,3 +39,4 @@ endif
 
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
+set runtimepath ^=~/.vim/bundle/ctrlp.vim
