@@ -269,6 +269,10 @@ awful.rules.rules = {
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+
+    { rule = { class = "chrome" }, properties = { tag = tags[1][2] }},
+    { rule = { class = "thunar" }, properties = { tag = tags[1][4] }},
+    { rule = { class = "skype" }, properties = { tag = tags[1][5] }},
 }
 -- }}}
 
@@ -307,3 +311,5 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- awful.util.spawn_with_shell("compton &")
 awful.util.spawn_with_shell("nm-applet") 
 awful.util.spawn_with_shell("conky")
+awful.util.spawn_with_shell("terminator -e irssi")
+

@@ -11,9 +11,10 @@ set softtabstop=4
 set pastetoggle=<F2>
 
 " tab remap
-nmap <C-t> :tabnew<CR>
-nmap <C-l> :tabnext<CR>
-nmap <C-h> :tabprevious<CR>
+nmap <C-l> :bn<CR>
+nmap <C-h> :bp<CR>
+
+set wildchar=<Tab> wildmenu wildmode=full
 
 " disable arrows
 nnoremap <up> <ESC>
