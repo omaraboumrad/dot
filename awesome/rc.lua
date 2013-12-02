@@ -257,7 +257,8 @@ awful.rules.rules = {
                      border_color = beautiful.border_normal,
                      focus = true,
                      keys = clientkeys,
-                     buttons = clientbuttons },
+                     buttons = clientbuttons ,
+                     size_hints_honor = false },
       callback = awful.client.setslave
     },
     { rule = { class = "MPlayer" },
