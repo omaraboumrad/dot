@@ -35,8 +35,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 local configdir = awful.util.getdir ("config")
--- beautiful.init (configdir .. "/theme.lua")
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+
+beautiful.init (configdir .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -311,6 +311,4 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- Launch stuff
 -- awful.util.spawn_with_shell("compton &")
 awful.util.spawn_with_shell("nm-applet") 
-awful.util.spawn_with_shell("conky")
-awful.util.spawn_with_shell("terminator -e irssi")
 

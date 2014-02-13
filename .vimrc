@@ -1,7 +1,13 @@
 set nu
 syntax on
 
+filetype on
+filetype plugin on
 filetype plugin indent on
+
+set hidden
+set incsearch
+set hlsearch
 
 " indent stuff
 set ts=4 expandtab
@@ -40,4 +46,3 @@ endif
 
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
-set runtimepath ^=~/.vim/bundle/ctrlp.vim
