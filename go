@@ -6,3 +6,5 @@ ln -s $REPO_BASE/dot/.config $HOME
 ln -s $REPO_BASE/dot/.tmux.conf $HOME
 ln -s $REPO_BASE/dot/.irssi $HOME
 ln -s $REPO_BASE/dot/.Xdefaults $HOME
+
+cat $REPO_BASE/dot/.bashrc >> $HOME/.bashrc

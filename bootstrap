@@ -1,8 +1,8 @@
 #!/bin/bash
 REPO_BASE=$HOME/repos
-GUI=xorg slim awesome thunar terminator chromium
-DEV=vim-gtk git python-pip 
-PIP=virtualenv virtualenvwrapper pyflakes autopep8
+GUI="xorg slim awesome thunar terminator chromium"
+DEV="vim-gtk git python-pip"
+PIP="virtualenv virtualenvwrapper pyflakes autopep8"
 
 sudo apt-get install -y $GUI
 sudo apt-get install -y $DEV
