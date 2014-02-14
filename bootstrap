@@ -1,11 +1,13 @@
 #!/bin/bash
 REPO_BASE=$HOME/repos
 GUI="xorg slim awesome thunar terminator chromium"
+CLI="irssi ranger"
 DEV="vim-gtk git bzr python-pip"
 PIP="virtualenv virtualenvwrapper pyflakes autopep8"
 
 sudo apt-get install -y $GUI
 sudo apt-get install -y $DEV
+sudo apt-get install -y $CLI
 sudo pip install $PIP
 
 REPO_BASE=$HOME/repos
