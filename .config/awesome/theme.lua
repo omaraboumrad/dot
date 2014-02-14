@@ -4,7 +4,7 @@
 
 theme = {}
 
-theme.font          = "Monaco 10"
+theme.font          = "Monospace 10"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#444444"

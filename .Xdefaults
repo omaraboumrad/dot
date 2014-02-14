@@ -1,7 +1,7 @@
 !urxvt color scheme:
 
-URxvt*background: #2B2B2B
-URxvt*foreground: #DEDEDE
+URxvt*background: #000000
+URxvt*foreground: #FFFFFF
 
 URxvt*colorUL: #86a2b0
 

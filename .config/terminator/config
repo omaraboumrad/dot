@@ -6,7 +6,7 @@
 [profiles]
   [[default]]
     use_system_font = False
-    font = Monaco 10
+    font = Monospace 10
     icon_bell = False
     show_titlebar = False
     foreground_color = "#ffffff"
