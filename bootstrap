@@ -1,7 +1,7 @@
 #!/bin/bash
 REPO_BASE=$HOME/repos
 GUI="xorg slim awesome thunar terminator chromium"
-CLI="irssi ranger tmux"
+CLI="irssi ranger tmux hsetroot"
 DEV="vim-gtk git bzr python-pip"
 PIP="virtualenv virtualenvwrapper pyflakes autopep8"
 
@@ -19,3 +19,15 @@ git config --global user.name "Omar Abou Mrad"
 git config --global user.email omar.aboumrad@gmail.com
 bzr whoami "Omar Abou Mrad <omar.aboumrad@rezayat.net>"
 
+cd /usr/share/fonts/truetype/
+ 
+# FONT
+sudo mkdir ttf-monaco
+cd ttf-monaco/
+sudo wget http://www.gringod.com/wp-upload/software/Fonts/Monaco_Linux.ttf
+sudo mkfontdir
+cd ..
+fc-cache
+
+# GO BACK HOME AT THE END
+cd $HOME
