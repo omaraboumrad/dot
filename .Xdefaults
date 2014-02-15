@@ -42,7 +42,7 @@ URxvt.perl-ext-common:  default,matcher,tabbedex
 
 !enabling clickable links:
 
-URxvt.urlLauncher:      /usr/bin/firefox
+URxvt.urlLauncher:      /usr/bin/chromium
 URxvt.matcher.button:   1 
 
 !urxvt scrolling options and cursor style:

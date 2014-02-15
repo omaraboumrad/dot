@@ -3,11 +3,13 @@ REPO_BASE=$HOME/repos
 GUI="xorg slim awesome rxvt-unicode chromium"
 CLI="irssi ranger tmux hsetroot bitlbee"
 DEV="vim-gtk git bzr python-pip"
+DRV="firmware-iwlwifi alsa-base pulseaudio"
 PIP="virtualenv virtualenvwrapper pyflakes autopep8"
 
 sudo apt-get install -y $GUI
 sudo apt-get install -y $DEV
 sudo apt-get install -y $CLI
+sudo apt-get install -y $DRV
 sudo pip install $PIP
 
 REPO_BASE=$HOME/repos

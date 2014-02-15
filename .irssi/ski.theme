@@ -212,16 +212,16 @@ abstracts = {
 };
 formats = {
   "fe-common/core" = {
-    join = "{channick_hilight $0}!{chanhost_hilight $1} has joined: {channel $2}";
-    part = "{channick $0}!{chanhost $1} has left {channel $2}: {reason $3}";
-    kick = "{channick $0} was kicked from {channel $1} by {nick $2}: {reason $3}";
-    quit = "{channick $0}!{chanhost $1} has quit: {reason $2}";
+    join = "{channick_hilight $0} J";
+    part = "{channick $0} L";
+    kick = "{channick $0} K by {nick $2}: {reason $3}";
+    quit = "{channick $0} Q({reason $2})";
     endofnames = "{channel $0}: {hilight $1} nicks ({comment @/{hilight $2} +/{hilight $3}  -/{hilight $4}})";
   };
   "fe-common/irc" = {
-    chanmode_change = "mode/{channelhilight $0}: {mode $1} by {nick $2}";
+    chanmode_change = "{mode $1} by {nick $2}";
     whois = "{nick $0}!{nickhost $1@$2}%: ircname  : $3";
-    server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
+    server_chanmode_change = "{mode $1}";
     whois_server = " server   : $1 {comment $2}";
   };
 };

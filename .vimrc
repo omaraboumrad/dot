@@ -46,3 +46,4 @@ endif
 
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
+au BufNewFile,BufRead *.py set cc=80 textwidth=80
