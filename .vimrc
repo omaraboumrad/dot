@@ -1,3 +1,4 @@
+colorscheme ron
 set nu
 syntax on
 

@@ -21,5 +21,3 @@ git config --global user.name "Omar Abou Mrad"
 git config --global user.email omar.aboumrad@gmail.com
 bzr whoami "Omar Abou Mrad <omar.aboumrad@rezayat.net>"
 
-sudo sh -c 'echo "blacklist pcspkr" >> /etc/modprobe.d/blacklist'
-
