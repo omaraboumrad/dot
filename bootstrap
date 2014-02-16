@@ -1,6 +1,6 @@
 #!/bin/bash
 REPO_BASE=$HOME/repos
-GUI="xorg slim awesome rxvt-unicode chromium"
+GUI="xorg slim awesome rxvt-unicode chromium scrot"
 CLI="irssi ranger tmux hsetroot bitlbee mutt"
 DEV="vim-gtk git bzr python-pip"
 DRV="firmware-iwlwifi alsa-base pulseaudio"
