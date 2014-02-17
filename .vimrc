@@ -1,6 +1,10 @@
-colorscheme ron
 set nu
 syntax on
+
+set cursorline
+set cursorcolumn
+hi CursorLine term=bold cterm=bold ctermbg=234
+hi CursorColumn ctermbg=233
 
 filetype on
 filetype plugin on
