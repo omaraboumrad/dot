@@ -10,6 +10,7 @@ filetype on
 filetype plugin on
 filetype plugin indent on
 
+set rnu
 set hidden
 set incsearch
 set hlsearch
@@ -52,3 +53,5 @@ endif
 autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
 
 au BufNewFile,BufRead *.py set cc=80 textwidth=80
+
+set laststatus=2
