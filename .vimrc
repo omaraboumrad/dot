@@ -1,10 +1,12 @@
-set nu
+execute pathogen#infect()
 syntax on
 
 set cursorline
 set cursorcolumn
+set colorcolumn=80
 hi CursorLine term=bold cterm=bold ctermbg=234
 hi CursorColumn ctermbg=233
+hi ColorColumn ctermbg=233
 
 filetype on
 filetype plugin on
@@ -49,9 +51,5 @@ set noerrorbells visualbell t_vb=
 if has('autocmd')
   autocmd GUIEnter * set visualbell t_vb=
 endif
-
-autocmd! BufNewFile,BufRead *.ino setlocal ft=arduino
-
-au BufNewFile,BufRead *.py set cc=80 textwidth=80
 
 set laststatus=2
