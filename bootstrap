@@ -15,7 +15,7 @@ sudo pip install $PIP
 REPO_BASE=$HOME/repos
 
 mkdir $REPO_BASE
-git clone http://github.com/omaraboumrad/dot.git $REPO_BASE/dot
+git clone https://github.com/omaraboumrad/dot.git $REPO_BASE/dot
 
 git config --global user.name "Omar Abou Mrad"
 git config --global user.email omar.aboumrad@gmail.com
