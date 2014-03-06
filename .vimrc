@@ -1,4 +1,6 @@
 execute pathogen#infect()
+set nocompatible
+set backspace=indent,eol,start
 syntax on
 
 set cursorline
@@ -7,6 +9,7 @@ set colorcolumn=80
 hi CursorLine term=bold cterm=bold ctermbg=234
 hi CursorColumn ctermbg=233
 hi ColorColumn ctermbg=233
+
 
 filetype on
 filetype plugin on
