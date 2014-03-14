@@ -21,19 +21,29 @@ set incsearch
 set hlsearch
 
 " indent stuff
+set list
 set ts=4 expandtab
 set shiftwidth=4
 set softtabstop=4
 
 set pastetoggle=<F2>
 
-" tab remap
-nmap <C-l> :bn<CR>
-nmap <C-h> :bp<CR>
+" Beeping/Flashing
+set noerrorbells visualbell t_vb=
+if has('autocmd')
+  autocmd GUIEnter * set visualbell t_vb=
+endif
+
+set laststatus=2
 
 set wildchar=<Tab> wildmenu wildmode=full
 
-" disable arrows
+" Maps
+nmap <C-l> :bn<CR>
+nmap <C-h> :bp<CR>
+nmap <C-@> :ls<CR>
+nmap K i<CR><ESC>k$
+
 nnoremap <up> <ESC>
 nnoremap <down> <ESC>
 nnoremap <left> <ESC>
@@ -49,10 +59,6 @@ vnoremap <down> <ESC>
 vnoremap <left> <ESC>
 vnoremap <right> <ESC>
 
-" Beeping/Flashing
-set noerrorbells visualbell t_vb=
-if has('autocmd')
-  autocmd GUIEnter * set visualbell t_vb=
-endif
+" Leader Stuff
 
-set laststatus=2
+map <leader>\ :noh<CR>
