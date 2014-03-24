@@ -3,6 +3,8 @@ set nocompatible
 set backspace=indent,eol,start
 syntax on
 
+colorscheme grb256
+
 set cursorline
 set cursorcolumn
 set colorcolumn=80
