@@ -18,6 +18,8 @@ filetype plugin on
 filetype plugin indent on
 
 set rnu
+set list
+set listchars=eol:↓
 set hidden
 set incsearch
 set hlsearch
