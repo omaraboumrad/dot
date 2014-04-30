@@ -22,7 +22,7 @@ set hidden
 set incsearch
 set hlsearch
 set list
-set listchars=eol:↓
+set listchars=eol:↓,trail:·
 
 " indent stuff
 set ts=4 expandtab
