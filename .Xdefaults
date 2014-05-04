@@ -31,10 +31,8 @@ URxvt*color7  : #D3D7CF
 URxvt*color15 : #EEEEEC
 
 !urxvt fonts: 
-
-URxvt*font: xft:Monospace:pixelsize=14
-URxvt*boldFont: xft:Monospace:bold:pixelsize=14
-
+URxvt*font: xft:Inconsolata:style=Semibold:antialias=true:hinting=slight:pixelsize=20
+URxvt*boldFont: xft:Inconsolata:style=bold:pixelsize=20:antialias=true:hinting=slight
 
 !urxvt extensions:
 
