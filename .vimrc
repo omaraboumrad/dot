@@ -18,14 +18,13 @@ filetype plugin on
 filetype plugin indent on
 
 set rnu
-set list
-set listchars=eol:↓
 set hidden
 set incsearch
 set hlsearch
+set list
+set listchars=eol:↓,trail:·
 
 " indent stuff
-set list
 set ts=4 expandtab
 set shiftwidth=4
 set softtabstop=4
@@ -66,3 +65,7 @@ vnoremap <right> <ESC>
 " Leader Stuff
 
 map <leader>\ :noh<CR>
+
+let @a='f[i->{lxf]r}'
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
