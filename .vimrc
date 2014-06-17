@@ -9,8 +9,8 @@ set cursorline
 set cursorcolumn
 set colorcolumn=80
 hi CursorLine term=bold cterm=bold ctermbg=234
-hi CursorColumn ctermbg=233
-hi ColorColumn ctermbg=233
+hi CursorColumn ctermbg=234
+hi ColorColumn ctermbg=234
 
 
 filetype on
@@ -44,7 +44,7 @@ set wildchar=<Tab> wildmenu wildmode=full
 " Maps
 nmap <C-l> :bn<CR>
 nmap <C-h> :bp<CR>
-nmap <C-@> :ls<CR>
+nmap <C-@> :noh<CR>
 nmap K i<CR><ESC>k$
 
 nnoremap <up> <ESC>
@@ -62,10 +62,16 @@ vnoremap <down> <ESC>
 vnoremap <left> <ESC>
 vnoremap <right> <ESC>
 
-" Leader Stuff
+" EasyMotion configuration
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+nmap s <Plug>(easymotion-s)
+nmap s <Plug>(easymotion-s2)
+let g:EasyMotion_smartcase = 1
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
-map <leader>\ :noh<CR>
-
-let @a='f[i->{lxf]r}'
-
+" ctrlp configruation
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+" vim flake8 configuration
+autocmd BufWritePost *.py call Flake8()
