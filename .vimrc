@@ -3,15 +3,11 @@ set nocompatible
 set backspace=indent,eol,start
 syntax on
 
-colorscheme grb256
+colorscheme solarized
 
 set cursorline
 set cursorcolumn
 set colorcolumn=80
-hi CursorLine term=bold cterm=bold ctermbg=234
-hi CursorColumn ctermbg=234
-hi ColorColumn ctermbg=234
-
 
 filetype on
 filetype plugin on
@@ -44,8 +40,10 @@ set wildchar=<Tab> wildmenu wildmode=full
 " Maps
 nmap <C-l> :bn<CR>
 nmap <C-h> :bp<CR>
-nmap <C-@> :noh<CR>
+nmap <C-@> :ls<CR>
 nmap K i<CR><ESC>k$
+
+map <leader>\ :noh<CR>
 
 nnoremap <up> <ESC>
 nnoremap <down> <ESC>
