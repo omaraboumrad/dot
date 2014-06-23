@@ -3,7 +3,7 @@ set nocompatible
 set backspace=indent,eol,start
 syntax on
 
-set background=light
+set background=dark
 colorscheme solarized
 
 set cursorline
@@ -35,6 +35,7 @@ if has('autocmd')
 endif
 
 set laststatus=2
+set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l\ of\ %L]
 
 set wildchar=<Tab> wildmenu wildmode=full
 
