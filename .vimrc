@@ -72,6 +72,3 @@ map <Leader>k <Plug>(easymotion-k)
 
 " ctrlp configruation
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-" vim flake8 configuration
-autocmd BufWritePost *.py call Flake8()
