@@ -3,6 +3,7 @@ set nocompatible
 set backspace=indent,eol,start
 syntax on
 
+set background=light
 colorscheme solarized
 
 set cursorline
