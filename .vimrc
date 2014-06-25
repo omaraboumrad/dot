@@ -45,7 +45,7 @@ nmap <C-h> :bp<CR>
 nmap <C-@> :ls<CR>
 nmap K i<CR><ESC>k$
 
-map <leader>\ :noh<CR>
+map <silent> <leader>\ :noh<CR>
 
 nnoremap <up> <ESC>
 nnoremap <down> <ESC>
@@ -72,3 +72,7 @@ map <Leader>k <Plug>(easymotion-k)
 
 " ctrlp configruation
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
