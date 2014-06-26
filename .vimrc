@@ -28,6 +28,9 @@ set softtabstop=4
 
 set pastetoggle=<F2>
 
+set splitright
+set splitbelow
+
 " Beeping/Flashing
 set noerrorbells visualbell t_vb=
 if has('autocmd')
@@ -43,7 +46,6 @@ set wildchar=<Tab> wildmenu wildmode=full
 nmap <C-l> :bn<CR>
 nmap <C-h> :bp<CR>
 nmap <C-@> :ls<CR>
-nmap K i<CR><ESC>k$
 
 map <silent> <leader>\ :noh<CR>
 
@@ -74,5 +76,5 @@ map <Leader>k <Plug>(easymotion-k)
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
