@@ -74,7 +74,3 @@ map <Leader>k <Plug>(easymotion-k)
 
 " ctrlp configruation
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
