@@ -10,8 +10,6 @@ set cursorline
 set cursorcolumn
 set colorcolumn=80
 
-filetype on
-filetype plugin on
 filetype plugin indent on
 
 set rnu
@@ -38,7 +36,7 @@ if has('autocmd')
 endif
 
 set laststatus=2
-set statusline=%f%m%r%h%w\ [%n:%{&ff}/%Y]%=[0x\%04.4B][%03v][%p%%\ line\ %l\ of\ %L]
+set statusline=%<\ %f\ %m%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
 
 set wildchar=<Tab> wildmenu wildmode=full
 
@@ -49,28 +47,5 @@ nmap <C-@> :ls<CR>
 
 map <silent> <leader>\ :noh<CR>
 
-nnoremap <up> <ESC>
-nnoremap <down> <ESC>
-nnoremap <left> <ESC>
-nnoremap <right> <ESC>
-
-inoremap <up> <ESC>
-inoremap <down> <ESC>
-inoremap <left> <ESC>
-inoremap <right> <ESC>
-
-vnoremap <up> <ESC>
-vnoremap <down> <ESC>
-vnoremap <left> <ESC>
-vnoremap <right> <ESC>
-
-" EasyMotion configuration
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-nmap s <Plug>(easymotion-s)
-nmap s <Plug>(easymotion-s2)
-let g:EasyMotion_smartcase = 1
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-
-" ctrlp configruation
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+nnoremap <silent> <TAB> :keepp /<[^/]<CR>
+nnoremap <silent> <S-TAB> :keepp ?<[^/]<CR>
