@@ -18,6 +18,7 @@ set incsearch
 set hlsearch
 set list
 set listchars=eol:↓,trail:·
+set foldmethod=indent
 
 " indent stuff
 set ts=4 expandtab
@@ -49,3 +50,5 @@ map <silent> <leader>\ :noh<CR>
 
 nnoremap <silent> <TAB> :keepp /<[^/]<CR>
 nnoremap <silent> <S-TAB> :keepp ?<[^/]<CR>
+nnoremap <silent> <Space> za
+vnoremap <silent> <Space> za
