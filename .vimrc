@@ -30,6 +30,9 @@ set pastetoggle=<F2>
 set splitright
 set splitbelow
 
+set nobackup
+set noswapfile
+
 " Beeping/Flashing
 set noerrorbells visualbell t_vb=
 if has('autocmd')
