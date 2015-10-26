@@ -55,3 +55,10 @@ nnoremap <silent> <TAB> :keepp /<[^/]<CR>
 nnoremap <silent> <S-TAB> :keepp ?<[^/]<CR>
 nnoremap <silent> <Space> za
 vnoremap <silent> <Space> za
+
+" Dispatch Shorts
+nnoremap <silent> <leader>p8 :Dispatch flake8 %<CR>
+
+" Toggle QuickFix/Location
+nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
+nmap <script> <silent> <leader>q :call ToggleQuickfixList()<CR>

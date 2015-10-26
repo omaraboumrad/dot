@@ -7,10 +7,12 @@ tmux split-window -h -p 50
 tmux send-keys -t 0 vim C-m
 tmux send-keys -t 1 python C-m
 tmux new-window -n server
-tmux send-keys -t 0 'vagrant ssh' C-m
-sleep 2
-tmux new-window -n shell 
-tmux send-keys -t 0 'vagrant ssh' C-m
+tmux send-keys -t 0 'vagrant ssh -- -t "cd /vagrant/ctc; /bin/bash"' C-m
+sleep 1
+tmux new-window -n shell
+tmux send-keys -t 0 'vagrant ssh -- -t "cd /vagrant/ctc; /bin/bash"' C-m
 tmux new-window -n misc
+tmux select-window -t 0
+tmux select-pane -t 0
 tmux attach
 
