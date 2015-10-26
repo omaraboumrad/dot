@@ -10,3 +10,6 @@
 [submodule ".vim/bundle/vim-togglelist"]
 	path = .vim/bundle/vim-togglelist
 	url = https://github.com/milkypostman/vim-togglelist
+[submodule ".vim/bundle/vim-monokai"]
+	path = .vim/bundle/vim-monokai
+	url = https://github.com/omaraboumrad/vim-monokai
