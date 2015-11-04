@@ -4,7 +4,7 @@ set backspace=indent,eol,start
 syntax on
 
 set background=dark
-colorscheme monokai
+colorscheme apprentice
 
 set cursorline
 set cursorcolumn
@@ -62,3 +62,7 @@ nnoremap <silent> <leader>p8 :Dispatch flake8 %<CR>
 " Toggle QuickFix/Location
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader>q :call ToggleQuickfixList()<CR>
+
+
+" Colors
+hi ColorColumn ctermbg=236
