@@ -66,3 +66,15 @@ nmap <script> <silent> <leader>q :call ToggleQuickfixList()<CR>
 
 " Colors
 hi ColorColumn ctermbg=236
+hi Folded term=standout ctermfg=9 ctermbg=235 guifg=#6c6c6c guibg=#1c1c1c
+
+" Folds
+set fillchars="fold: "
+setlocal foldtext=ManualFillCharText()
+
+function! ManualFillCharText()
+  let total = (v:foldend - v:foldstart)
+  let init_chars = repeat('    ', foldlevel(v:foldstart))
+  let actual = init_chars . '└──' . ' [ ' . total . ' ] '
+  return actual . '────•'
+endfunction
