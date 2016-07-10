@@ -47,7 +47,7 @@ set wildchar=<Tab> wildmenu wildmode=full
 " Maps
 nmap <C-l> :bn<CR>
 nmap <C-h> :bp<CR>
-nmap <C-@> :ls<CR>
+nmap <C-@> :ls<CR>:b<space>
 
 map <silent> <leader>\ :noh<CR>
 
@@ -58,6 +58,7 @@ vnoremap <silent> <Space> za
 
 " Dispatch Shorts
 nnoremap <silent> <leader>p8 :Dispatch flake8 %<CR>
+nnoremap <silent> <leader>d :Make docs<CR>
 
 " Toggle QuickFix/Location
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
@@ -73,8 +74,28 @@ set fillchars="fold: "
 setlocal foldtext=ManualFillCharText()
 
 function! ManualFillCharText()
-  let total = (v:foldend - v:foldstart)
+  let total = (v:foldend - v:foldstart + 1)
   let init_chars = repeat('    ', foldlevel(v:foldstart))
-  let actual = init_chars . '└──' . ' [ ' . total . ' ] '
-  return actual . '────•'
+  let actual = init_chars . '■■■■ ' . total . ' ■■■■'
+  return actual
 endfunction
+
+noremap <silent> <leader>i :w !ix<CR>
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+function! s:Args()
+    let i = 0
+    for arg in argv()
+        let i += 1
+        let f = fnamemodify(arg, ":t")
+        if expand('%') == arg
+            let c = '%'
+        else
+            let c = ' '
+        endif
+        echo i.c.f
+    endfor
+endfunction
+
+nnoremap ga :call <sid>Args()<cr>:argument<space>

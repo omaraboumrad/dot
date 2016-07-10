@@ -6,28 +6,10 @@ servers = (
     autoconnect = "yes";
     password = "x";
   },
-  {
-    address = "betterhangout.irc.slack.com";
-    chatnet = "hangout";
-    port = "6667";
-    autoconnect = "yes";
-    use_ssl = "yes";
-    password = "x";
-  },
-  {
-    address = "mena-devs.irc.slack.com";
-    chatnet = "mena";
-    port = "6667";
-    autoconnect = "yes";
-    use_ssl = "yes";
-    password = "x";
-  }
 );
 
 chatnets = {
   freenode = { type = "IRC"; nick = "xterm"; };
-  hangout = { type = "IRC"; nick = "omar"; };
-  mena = { type = "IRC"; nick = "omar"; };
 };
 
 channels = (
@@ -216,42 +198,12 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#general";
-        tag = "hangout";
-      }
-    );
-  };
-  3 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#general";
-        tag = "mena";
-      }
-    );
-  };
-  4 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#programming";
-        tag = "mena";
-      }
-    );
-  };
-  5 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
         name = "#vim";
         tag = "freenode";
       }
     );
   };
-  6 = {
+  3 = {
     items = (
       {
         type = "CHANNEL";
@@ -261,7 +213,7 @@ windows = {
       }
     );
   };
-  7 = {
+  4 = {
     items = (
       {
         type = "CHANNEL";
