@@ -5,7 +5,7 @@ export ZSH=/Users/xterm/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="imajes"
+ZSH_THEME="avit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -45,11 +45,11 @@ ZSH_THEME="imajes"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git docker)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/scripts"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -80,23 +80,74 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias di='docker images'
 alias dr='docker run'
 alias dps='docker ps'
 alias dpsa='docker ps -a'
 alias dpsl='docker ps -l'
 alias drm='docker rm'
-alias drma='docker stop $(docker ps -a -q) | xargs docker rm'
+alias drma='docker stop -t 0 $(docker ps -a -q) | xargs docker rm'
+alias drmdi='docker rmi $(docker images -f "dangling=true" -q)'
+alias drmdv='docker volume rm $(docker volume ls -qf dangling=true)'
+alias vana='python'
+alias dc='docker-compose'
+alias dci='docker inspect'
+alias dcs='docker-compose stop -t 0'
+alias dcd='docker-compose down'
+alias dcb='docker-compose build'
+alias dcu='docker-compose up'
+alias dcud='docker-compose up -d'
+alias dclf='docker-compose logs -f'
 
-alias ctc='~/scripts/ctc'
+# alias ctc='~/scripts/ctc'
 
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/xterm/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/xterm/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-export PYENV_ROOT=/usr/local/var/pyenv
-eval "$(pyenv virtualenv-init -)"
+export PATH="/shims:$PATH"
+eval "$(pyenv init -)"
+
+
+
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+export PATH="/usr/local/opt/opencv3/bin:$PATH"
+
+
+# JENV
+#
+export PATH="/usr/local/opt/jenv/shims:${PATH}"
+source "/usr/local/Cellar/jenv/0.4.4/libexec/libexec/../completions/jenv.zsh"
+jenv rehash 2>/dev/null
+export JENV_LOADED=1
+unset JAVA_HOME
+jenv() {
+  typeset command
+  command="$1"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  enable-plugin|rehash|shell|shell-options)
+    eval `jenv "sh-$command" "$@"`;;
+  *)
+    command jenv "$command" "$@";;
+  esac
+}
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /Users/xterm/.nvm/versions/node/v6.9.2/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/xterm/.nvm/versions/node/v6.9.2/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh
+
+# added by travis gem
+[ -f /Users/xterm/.travis/travis.sh ] && source /Users/xterm/.travis/travis.sh

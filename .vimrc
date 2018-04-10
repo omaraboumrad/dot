@@ -6,8 +6,9 @@ syntax on
 set background=dark
 colorscheme apprentice
 
+
 set cursorline
-set cursorcolumn
+" set cursorcolumn
 set colorcolumn=80
 
 filetype plugin indent on
@@ -16,7 +17,7 @@ set rnu
 set hidden
 set incsearch
 set hlsearch
-set list
+" set list
 set listchars=eol:↓,trail:·
 set foldmethod=indent
 
@@ -58,6 +59,7 @@ vnoremap <silent> <Space> za
 
 " Dispatch Shorts
 nnoremap <silent> <leader>p8 :Dispatch flake8 %<CR>
+nnoremap <silent> <leader>e8 :Dispatch npm run lint % --silent<CR>
 nnoremap <silent> <leader>d :Make docs<CR>
 
 " Toggle QuickFix/Location
@@ -82,7 +84,7 @@ endfunction
 
 noremap <silent> <leader>i :w !ix<CR>
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|env'
 
 function! s:Args()
     let i = 0
@@ -99,3 +101,12 @@ function! s:Args()
 endfunction
 
 nnoremap ga :call <sid>Args()<cr>:argument<space>
+nnoremap <silent> <leader>, :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+nnoremap <silent> <leader>; :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+
+let g:jsx_ext_required = 0
+
+" Clean comments
+nnoremap <silent> <leader>c :g/\v^\s*(#\|$)/d<CR>
+
+autocmd BufRead,BufNewFile *.vana set ft=vana
