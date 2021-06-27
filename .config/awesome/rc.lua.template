@@ -97,10 +97,10 @@ local themes = {
     "vertex"           -- 10
 }
 
-local chosen_theme = themes[3]
+local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "gnome-terminal"
+local terminal     = "urxvtc"
 local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
 local editor       = os.getenv("EDITOR") or "nvim"
@@ -109,11 +109,28 @@ local browser      = "librewolf"
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
 awful.layout.layouts = {
+    awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    --awful.layout.suit.fair,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.max,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.nw,
+    --awful.layout.suit.corner.ne,
+    --awful.layout.suit.corner.sw,
+    --awful.layout.suit.corner.se,
+    --lain.layout.cascade,
+    --lain.layout.cascade.tile,
+    --lain.layout.centerwork,
+    --lain.layout.centerwork.horizontal,
+    --lain.layout.termfair,
+    --lain.layout.termfair.center
 }
 
 lain.layout.termfair.nmaster           = 3
@@ -216,13 +233,32 @@ screen.connect_signal("arrange", function (s)
 end)
 
 -- Create a wibox for each screen and add it
-awful.screen.connect_for_each_screen(function(s) 
-    beautiful.at_screen_connect(s)
-end)
+awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+
+-- }}}
+
+-- {{{ Mouse bindings
+
+root.buttons(mytable.join(
+    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    awful.button({ }, 4, awful.tag.viewnext),
+    awful.button({ }, 5, awful.tag.viewprev)
+))
+
+-- }}}
 
 -- {{{ Key bindings
 
 globalkeys = mytable.join(
+    -- Take a screenshot
+    -- https://github.com/lcpz/dots/blob/master/bin/screenshot
+    awful.key({ altkey }, "p", function() os.execute("screenshot") end,
+              {description = "take a screenshot", group = "hotkeys"}),
+
+    -- X screen locker
+    awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
+              {description = "lock screen", group = "hotkeys"}),
+
     -- Show help
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -245,9 +281,7 @@ globalkeys = mytable.join(
     awful.key({ altkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
- 
- 
-      end,
+        end,
         {description = "focus next by index", group = "client"}
     ),
     awful.key({ altkey,           }, "k",
@@ -473,6 +507,27 @@ globalkeys = mytable.join(
     awful.key({ modkey }, "q", function () awful.spawn(browser) end,
               {description = "run browser", group = "launcher"}),
 
+    -- Default
+    --[[ Menubar
+    awful.key({ modkey }, "p", function() menubar.show() end,
+              {description = "show the menubar", group = "launcher"})
+    --]]
+    --[[ dmenu
+    awful.key({ modkey }, "x", function ()
+            os.execute(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+            beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
+        end,
+        {description = "show dmenu", group = "launcher"})
+    --]]
+    -- alternatively use rofi, a dmenu-like application with more features
+    -- check https://github.com/DaveDavenport/rofi for more details
+    --[[ rofi
+    awful.key({ modkey }, "x", function ()
+            os.execute(string.format("rofi -show %s -theme %s",
+            'run', 'dmenu'))
+        end,
+        {description = "show rofi", group = "launcher"}),
+    --]]
     -- Prompt
     awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
@@ -656,7 +711,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
+      }, properties = { titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -672,7 +727,7 @@ awful.rules.rules = {
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
-    if not awesome.startup then awful.client.setslave(c) end
+    -- if not awesome.startup then awful.client.setslave(c) end
 
     if awesome.startup
       and not c.size_hints.user_position
@@ -703,7 +758,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c, { size = 24 }) : setup {
+    awful.titlebar(c, { size = 16 }) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
