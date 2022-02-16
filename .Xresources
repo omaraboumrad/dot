@@ -36,6 +36,12 @@
 *.color15:      #d2d4de
 
 ! rxvt
-URxvt.font:      xft:Monospace:size=12:antialias=true
+URxvt.font:      xft:Monospace:size=10:antialias=true
 URxvt.scrollBar: false
 
+
+! rofi
+rofi.matching: fuzzy
+rofi.modi: drun
+rofi.hide-scrollbar: true
+rofi.levenshtein-sort: true

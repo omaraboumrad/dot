@@ -18,7 +18,6 @@ local wibox         = require("wibox")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 local lain          = require("lain")
---local menubar       = require("menubar")
 local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup")
                       require("awful.hotkeys_popup.keys")
@@ -58,6 +57,9 @@ do
 end
 
 -- }}}
+--
+
+awful.util.shell = "zsh"
 
 -- {{{ Autostart windowless processes
 
@@ -100,7 +102,7 @@ local themes = {
 local chosen_theme = themes[3]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "gnome-terminal"
+local terminal     = "urxvt"
 local vi_focus     = false -- vi-like client focus https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true  -- cycle with only the previously focused client or all https://github.com/lcpz/awesome-copycats/issues/274
 local editor       = os.getenv("EDITOR") or "nvim"
@@ -155,36 +157,6 @@ awful.util.tasklist_buttons = mytable.join(
 )
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
-
--- }}}
-
--- {{{ Menu
-
--- Create a launcher widget and a main menu
-local myawesomemenu = {
-   { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "Manual", string.format("%s -e man awesome", terminal) },
-   { "Edit config", string.format("%s -e %s %s", terminal, editor, awesome.conffile) },
-   { "Restart", awesome.restart },
-   { "Quit", function() awesome.quit() end },
-}
-
-local mymainmenu = freedesktop.menu.build {
-    before = {
-        { "Awesome", myawesomemenu, beautiful.awesome_icon },
-        -- other triads can be put here
-    },
-    after = {
-        { "Open terminal", terminal },
-        -- other triads can be put here
-    }
-}
-
--- hide menu when mouse leaves it
---mymainmenu.wibox:connect_signal("mouse::leave", function() mymainmenu:hide() end)
-
--- Set the Menubar terminal for applications that require it
---menubar.utils.terminal = terminal
 
 -- }}}
 
@@ -283,10 +255,6 @@ globalkeys = mytable.join(
         end,
         {description = "focus right", group = "client"}),
 
-    -- Menu
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
-
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
@@ -348,9 +316,9 @@ globalkeys = mytable.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey, altkey    }, "l",     function () awful.tag.incmwfact( 0.05)          end,
+    awful.key({ modkey, altkey    }, "l",     function () awful.tag.incmwfact( 0.02)          end,
               {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey, altkey    }, "h",     function () awful.tag.incmwfact(-0.05)          end,
+    awful.key({ modkey, altkey    }, "h",     function () awful.tag.incmwfact(-0.02)          end,
               {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
@@ -474,7 +442,7 @@ globalkeys = mytable.join(
               {description = "run browser", group = "launcher"}),
 
     -- Prompt
-    awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey }, "r", function () awful.util.spawn("rofi -show run") end,
               {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
