@@ -186,6 +186,7 @@ screen.connect_signal("arrange", function (s)
         end
     end
 end)
+beautiful.gap_single_client   = false
 
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s) 

@@ -6,13 +6,16 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'cocopon/iceberg.vim'
+Plug 'arcticicestudio/nord-vim'
 
 Plug 'vim-airline/vim-airline'
 
-Plug 'udalov/kotlin-vim'
-Plug 'jceb/vim-orgmode'
+Plug 'lifepillar/vim-solarized8'
 
+Plug 'mattn/emmet-vim'
+
+Plug 'SirVer/ultisnips'
+Plug 'andrewstuart/vim-kubernetes'
 
 call plug#end()
 
@@ -39,7 +42,7 @@ set splitbelow
 set nobackup
 set noswapfile
 
-colorscheme iceberg
+colorscheme nord
 
 
 nmap <silent> <C-l> :bn<CR>
@@ -49,3 +52,13 @@ map <silent> <leader>\ :noh<CR>
 " Toggle QuickFix/Location
 nmap <script> <silent> <leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader>q :call ToggleQuickfixList()<CR>
+let g:airline_powerline_fonts = 1
+
+lua << EOF
+    require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } } 
+EOF
+
+" Ulti Snips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
