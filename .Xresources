@@ -38,7 +38,7 @@
 *.color15: nord6
 
 ! rxvt
-URxvt.font:      xft:JetBrainsMono:size=10:antialias=true
+URxvt.font:      xft:JetBrainsMono:size=14:antialias=true
 URxvt.scrollBar: false
 URxvt.perl-ext-common: resize-font
 

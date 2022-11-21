@@ -14,9 +14,12 @@ Plug 'lifepillar/vim-solarized8'
 
 Plug 'mattn/emmet-vim'
 
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'andrewstuart/vim-kubernetes'
 
+Plug 'mhinz/vim-signify'
+
+Plug 'neoclide/vim-jsx-improve'
 call plug#end()
 
 " Telescope Setup
@@ -62,3 +65,4 @@ EOF
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
