@@ -54,8 +54,8 @@ require('lazy').setup({
   },
 
   { -- Color Scheme
-    'shaunsingh/nord.nvim',
-    -- 'arcticicestudio/nord-vim',
+    -- 'shaunsingh/nord.nvim',
+    'arcticicestudio/nord-vim',
     -- 'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
@@ -106,9 +106,6 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
-    -- ensure_installed = { "python", "javascript", "vimdoc", "html" },
-    -- highlight = { enable = true },
-    -- indent = {enable = true }
   },
 
   { -- Add Git Signs
@@ -158,7 +155,6 @@ require('lazy').setup({
       'rafamadriz/friendly-snippets',
     },
   },
-
 
 }, {})
 
