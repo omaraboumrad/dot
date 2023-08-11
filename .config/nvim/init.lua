@@ -40,6 +40,7 @@ vim.keymap.set({ 'n' }, '<leader>o', '<cmd>e ~/.config/nvim/init.lua<CR>', { sil
 vim.keymap.set({ 'n' }, '<leader>\\', '<cmd>noh<CR>', { silent = true }) -- Remove highlight
 vim.keymap.set({ 'n' }, '<C-l>', '<cmd>bn<CR>', { silent = true }) -- Next Buffer
 vim.keymap.set({ 'n' }, '<C-h>', '<cmd>bp<CR>', { silent = true }) -- Previous Buffer
+vim.keymap.set({ 'n' }, '<C-w>b', '<cmd>bp|bd #<CR>', { silent = true }) -- Unload Buffer but keep split
 
 -- Plugins
 
@@ -55,11 +56,12 @@ require('lazy').setup({
 
   { -- Color Scheme
     -- 'shaunsingh/nord.nvim',
-    'arcticicestudio/nord-vim',
     -- 'navarasu/onedark.nvim',
+    -- 'arcticicestudio/nord-vim',
+    'morhetz/gruvbox',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'nord'
+      vim.cmd.colorscheme 'gruvbox'
     end,
   },
 
@@ -79,7 +81,6 @@ require('lazy').setup({
     },
   },
 
-
   { -- Status Bar
     'nvim-lualine/lualine.nvim',
     opts = {
@@ -87,7 +88,7 @@ require('lazy').setup({
         icons_enabled = false,
         component_separators = '|',
         section_separators = '',
-        theme = 'nord',
+        theme = 'gruvbox',
       },
       sections = {
         lualine_c = {
@@ -351,3 +352,30 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+local actions = require "telescope.actions"
+require('telescope').setup({
+  defaults = {
+    mappings = {
+      i = {
+        ['<leader>p'] = require('telescope.actions.layout').toggle_preview
+      }
+    },
+    preview = {
+      hide_on_startup = true -- hide previewer when picker starts
+    },
+    layout_config = {
+      width = 0.50,
+      height = 0.50,
+    },
+  },
+  pickers = {
+    buffers = {
+      mappings = {
+        i = {
+          ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
+        }
+      }
+    }
+  }
+})
