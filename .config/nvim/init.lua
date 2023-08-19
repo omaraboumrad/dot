@@ -26,6 +26,7 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.cursorline = true
 vim.o.noswapfile = true
+vim.wo.fillchars='eob: '
 
 vim.wo.signcolumn = 'yes'
 vim.o.updatetime = 250
@@ -35,12 +36,12 @@ vim.o.completeopt = 'menuone,noselect'
 -- vim.o.background = 'dark'
 
 -- Global Keymaps
-
 vim.keymap.set({ 'n' }, '<leader>o', '<cmd>e ~/.config/nvim/init.lua<CR>', { silent = true }) -- Open Config File
 vim.keymap.set({ 'n' }, '<leader>\\', '<cmd>noh<CR>', { silent = true }) -- Remove highlight
 vim.keymap.set({ 'n' }, '<C-l>', '<cmd>bn<CR>', { silent = true }) -- Next Buffer
 vim.keymap.set({ 'n' }, '<C-h>', '<cmd>bp<CR>', { silent = true }) -- Previous Buffer
-vim.keymap.set({ 'n' }, '<C-w>b', '<cmd>bp|bd #<CR>', { silent = true }) -- Unload Buffer but keep split
+vim.keymap.set({ 'n' }, '<leader>b', '<cmd>bp|bd #<CR>', { silent = true }) -- Unload Buffer but keep split
+vim.keymap.set({ 'n' }, '<leader>c', '<C-w>c', { silent = true }) -- Close window
 
 -- Plugins
 
@@ -79,7 +80,12 @@ require('lazy').setup({
       { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Help Tags'},
       { '<leader>fc', '<cmd>Telescope git_commits<cr>', desc = 'Git Commits'},
     },
-  },
+    },
+
+    { 
+	    "nvim-telescope/telescope-file-browser.nvim",
+	    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    },
 
   { -- Status Bar
     'nvim-lualine/lualine.nvim',
@@ -88,6 +94,7 @@ require('lazy').setup({
         icons_enabled = false,
         component_separators = '|',
         section_separators = '',
+        globalstatus=true,
         theme = 'gruvbox',
       },
       sections = {
@@ -179,6 +186,8 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  vim.keymap.set({ 'n' }, '<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', { silent = true })
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
@@ -187,11 +196,11 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation'})
 
   -- Lesser used LSP functionality
   --  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>wl', function()
@@ -291,7 +300,7 @@ cmp.setup {
 
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'json', 'jsonc' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -379,3 +388,8 @@ require('telescope').setup({
     }
   }
 })
+
+require("telescope").load_extension "file_browser"
+vim.cmd [[ set runtimepath^=~/.config/nvim/telescope-chdir.nvim ]]
+vim.cmd [[ command! ChdirTelescope lua require('chdir').change_directory() ]]
+vim.cmd [[ hi SignColumn ctermbg=bg ]]
