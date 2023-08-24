@@ -36,16 +36,29 @@ vim.o.completeopt = 'menuone,noselect'
 -- vim.o.background = 'dark'
 
 -- Global Keymaps
-vim.keymap.set({ 'n' }, '<leader>o', '<cmd>e ~/.config/nvim/init.lua<CR>', { silent = true }) -- Open Config File
-vim.keymap.set({ 'n' }, '<leader>\\', '<cmd>noh<CR>', { silent = true }) -- Remove highlight
-vim.keymap.set({ 'n' }, '<C-l>', '<cmd>bn<CR>', { silent = true }) -- Next Buffer
-vim.keymap.set({ 'n' }, '<C-h>', '<cmd>bp<CR>', { silent = true }) -- Previous Buffer
-vim.keymap.set({ 'n' }, '<leader>b', '<cmd>bp|bd #<CR>', { silent = true }) -- Unload Buffer but keep split
-vim.keymap.set({ 'n' }, '<leader>c', '<C-w>c', { silent = true }) -- Close window
+vim.keymap.set('n', '<leader>o', '<cmd>e ~/.config/nvim/init.lua<CR>', { silent = true }) -- Open Config File
+vim.keymap.set('n', '<leader>\\', '<cmd>noh<CR>', { silent = true }) -- Remove highlight
+vim.keymap.set('n', '<C-l>', '<cmd>bn<CR>', { silent = true }) -- Next Buffer
+vim.keymap.set('n', '<C-h>', '<cmd>bp<CR>', { silent = true }) -- Previous Buffer
+vim.keymap.set('n', '<leader>b', '<cmd>bp|bd #<CR>', { silent = true }) -- Unload Buffer but keep split
+vim.keymap.set('n', '<leader>c', '<C-w>c', { silent = true }) -- Close window
+
+-- Terminal Related
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { silent = true })      -- normal mode
+vim.api.nvim_command("autocmd TermOpen * startinsert")             -- starts in insert mode
+vim.api.nvim_command("autocmd TermOpen * setlocal nonu nornu")       -- no numbers
+vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no") -- no sign column
+
+-- Floatterm Related
+vim.keymap.set('n', '<leader>t', '<cmd>FloatermToggle<CR>', { silent = true }) -- Toggle Floatterm
+vim.keymap.set('t', '<leader>t', '<cmd>FloatermToggle<CR>', { silent = true }) -- Toggle Floatterm
+
+
 
 -- Plugins
 
 require('lazy').setup({
+  'voldikss/vim-floaterm',
   'Vimjas/vim-python-pep8-indent', -- No better way of doing python indent
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-fugitive', -- Git integration
@@ -59,10 +72,11 @@ require('lazy').setup({
     -- 'shaunsingh/nord.nvim',
     -- 'navarasu/onedark.nvim',
     -- 'arcticicestudio/nord-vim',
-    'morhetz/gruvbox',
+    -- 'morhetz/gruvbox',
+    'catppuccin/nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -70,22 +84,22 @@ require('lazy').setup({
     'nvim-telescope/telescope.nvim',
     tag = '0.1.1',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
-    -- file_ignore_patterns = { 'node_modules', '*.svg' },
-    keys = {
-      { '<leader>ff', '<cmd>Telescope find_files<cr>', desc = 'Find Files'},
-      { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = 'Live Grep'},
-      { '<leader>fs', '<cmd>Telescope grep_string<cr>', desc = 'Grep String'},
-      { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = 'Find Buffers'},
-      { '<leader>fr', '<cmd>Telescope file_browser<cr>', desc = 'File Browser'},
-      { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = 'Help Tags'},
-      { '<leader>fc', '<cmd>Telescope git_commits<cr>', desc = 'Git Commits'},
-    },
-    },
+    config = function()
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = '[F]ind [F]iles' })
+      vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep'})
+      vim.keymap.set('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = 'Grep String'})
+      vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find Buffers'})
+      vim.keymap.set('n', '<leader>fr', '<cmd>Telescope file_browser<cr>', { desc = 'File Browser'})
+      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = 'Help Tags'})
+      vim.keymap.set('n', '<leader>fc', '<cmd>Telescope git_commits<cr>', { desc = 'Git Commits'})
+      vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = 'Key Maps'})
+    end,
+  },
 
-    { 
-	    "nvim-telescope/telescope-file-browser.nvim",
-	    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
 
   { -- Status Bar
     'nvim-lualine/lualine.nvim',
@@ -95,15 +109,20 @@ require('lazy').setup({
         component_separators = '|',
         section_separators = '',
         globalstatus=true,
-        theme = 'gruvbox',
+        theme = 'catppuccin',
       },
       sections = {
+        lualine_a = {},
+        lualine_b = {},
         lualine_c = {
           function()
             return '[' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ']'
           end,
           { 'filename', path = 1 }, -- Show only the base filename
         },
+        lualine_x = {},
+        lualine_y = {},
+
       },
     },
   },
@@ -174,38 +193,24 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 local on_attach = function(_, bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP: [R]e[n]ame'})
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP: [C]ode [A]ction'})
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  vim.keymap.set({ 'n' }, '<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', { silent = true })
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP: [G]oto [D]efinition'})
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP: [G]oto [D]eclaration'})
+  vim.keymap.set('n', '<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', { silent = true })
+  vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'LSP: [G]oto [R]eferences'})
+  vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { desc = 'LSP: [G]oto [I]mplementation'})
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'LSP: Type [D]efinition'})
+  vim.keymap.set('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, { desc = 'LSP: [D]ocument [S]ymbols'})
+  vim.keymap.set('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'LSP: [W]orkspace [S]ymbols'})
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP: Hover Documentation'})
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP: Signature Documentation'})
   vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation'})
-
-  -- Lesser used LSP functionality
-  --  -- Lesser used LSP functionality
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'LSP: [W]orkspace [A]dd Folder'})
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'LSP: [W]orkspace [R]emove Folder'})
+  vim.keymap.set('n', '<leader>wl', (function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end), '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -299,12 +304,8 @@ cmp.setup {
 -- See `:help nvim-treesitter`
 
 require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'json', 'jsonc' },
-
-  -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
-
   highlight = { enable = true },
   indent = { enable = true },
   incremental_selection = {
@@ -392,4 +393,5 @@ require('telescope').setup({
 require("telescope").load_extension "file_browser"
 vim.cmd [[ set runtimepath^=~/.config/nvim/telescope-chdir.nvim ]]
 vim.cmd [[ command! ChdirTelescope lua require('chdir').change_directory() ]]
-vim.cmd [[ hi SignColumn ctermbg=bg ]]
+-- vim.cmd [[ hi SignColumn ctermbg=guibg ]]
+-- vim.cmd [[ hi FloatermBorder ctermbg=guibg ]]
