@@ -183,6 +183,16 @@ require('lazy').setup({
     },
   },
 
+  { -- Pretty Quickfix
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = { },
+  },
+
+  { -- Copilot
+    "github/copilot.vim",
+  },
+
 }, {})
 
 -- LSP Configuration
@@ -391,6 +401,20 @@ require('telescope').setup({
 })
 
 require("telescope").load_extension "file_browser"
+
+local trouble = require("trouble.providers.telescope")
+local telescope = require("telescope")
+
+telescope.setup {
+  defaults = {
+    mappings = {
+      i = { ["<c-t>"] = trouble.open_with_trouble },
+      n = { ["<c-t>"] = trouble.open_with_trouble },
+    },
+  },
+}
+
+
 vim.cmd [[ set runtimepath^=~/.config/nvim/telescope-chdir.nvim ]]
 vim.cmd [[ command! ChdirTelescope lua require('chdir').change_directory() ]]
 -- vim.cmd [[ hi SignColumn ctermbg=guibg ]]
