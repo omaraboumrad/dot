@@ -193,6 +193,13 @@ require('lazy').setup({
     "github/copilot.vim",
   },
 
+  {
+    'omaraboumrad/telescope-extra-actions.nvim',
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    }
+  },
+
 }, {})
 
 -- LSP Configuration
@@ -374,6 +381,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 local actions = require "telescope.actions"
+local extra_actions = require "telescope-extra-actions"
 require('telescope').setup({
   defaults = {
     mappings = {
@@ -396,7 +404,14 @@ require('telescope').setup({
           ["<c-d>"] = actions.delete_buffer + actions.move_to_top,
         }
       }
-    }
+    },
+    find_files = {
+      mappings = {
+        i = {
+          ["<c-d>"] = extra_actions.delete_file,
+        }
+      }
+    },
   }
 })
 
