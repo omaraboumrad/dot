@@ -23,3 +23,9 @@ export KSHELL="bash"
 
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/xterm/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/xterm/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/xterm/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/xterm/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

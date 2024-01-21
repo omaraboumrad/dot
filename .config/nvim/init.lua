@@ -25,7 +25,7 @@ vim.o.pastetoggle = "<F2>"
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.cursorline = true
-vim.o.noswapfile = true
+vim.o.swapfile = false
 vim.wo.fillchars='eob: '
 
 vim.wo.signcolumn = 'yes'
@@ -53,7 +53,8 @@ vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no") -- no sign co
 vim.keymap.set('n', '<leader>t', '<cmd>FloatermToggle<CR>', { silent = true }) -- Toggle Floatterm
 vim.keymap.set('t', '<leader>t', '<cmd>FloatermToggle<CR>', { silent = true }) -- Toggle Floatterm
 
-
+-- Play Eye
+vim.keymap.set('n', '<leader>ai', ":lua arun({'python', 'parser.py', '--zero', vim.fn.expand('%')})<CR>", { silent = true})
 
 -- Plugins
 
@@ -153,13 +154,10 @@ require('lazy').setup({
     },
   },
 
-  { -- Indentation Character
-    'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-      show_end_of_line = true,
-    },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {}
   },
 
   { -- LSP Configuration & Plugins
@@ -199,6 +197,20 @@ require('lazy').setup({
       "nvim-telescope/telescope.nvim",
     }
   },
+
+  {
+  "folke/which-key.nvim",
+  event = "VeryLazy",
+  init = function()
+    vim.o.timeout = true
+    vim.o.timeoutlen = 300
+  end,
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+}
 
 }, {})
 
@@ -321,7 +333,7 @@ cmp.setup {
 -- See `:help nvim-treesitter`
 
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'json', 'jsonc' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'javascript', 'vimdoc', 'vim', 'json', 'jsonc' },
   auto_install = false,
   highlight = { enable = true },
   indent = { enable = true },
@@ -434,3 +446,39 @@ vim.cmd [[ set runtimepath^=~/.config/nvim/telescope-chdir.nvim ]]
 vim.cmd [[ command! ChdirTelescope lua require('chdir').change_directory() ]]
 -- vim.cmd [[ hi SignColumn ctermbg=guibg ]]
 -- vim.cmd [[ hi FloatermBorder ctermbg=guibg ]]
+--
+--
+
+function arun(command)
+  -- Internal buffering is required.
+  -- Partly because I suck at lua, so
+  -- had to figure out a way to deal with
+  -- the nvim_buf_set_lines not allowing newlines
+  local buffer = ""
+
+  local function on_out(_, data)
+    if data then
+      for _, line in ipairs(data) do
+        buffer = buffer .. line
+
+        while true do
+          local newline_index = buffer:find("\n") or buffer:find("\0")
+          if not newline_index then break end
+
+          local line_to_set = buffer:sub(1, newline_index - 1)
+          buffer = buffer:sub(newline_index + 1)
+
+          local line_count = vim.api.nvim_buf_line_count(0)
+          vim.api.nvim_buf_set_lines(0, line_count, line_count, false, {line_to_set})
+        end
+      end
+    end
+  end
+
+  vim.fn.jobstart(command, {
+    on_stdout = on_out,
+    on_stderr = on_out,
+    stdout_buffered = false,
+    stderr_buffered = false
+  })
+end
