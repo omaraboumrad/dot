@@ -21,6 +21,9 @@ export do="--dry-run=client -o yaml"
 export now="--force --grace-period=0"
 export KSHELL="bash"
 
+# Compose
+alias dcps='docker compose ps -a --format "table {{.Service}}\t{{.Status}}" | awk '\''BEGIN { RED="\033[1;31m"; GREEN="\033[1;32m"; NC="\033[0m" } /Exited/ { printf RED $0 NC "\n"; next } /Up/ { printf GREEN $0 NC "\n"; next } { print $0 }'\'
+
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
@@ -29,3 +32,9 @@ if [ -f '/Users/xterm/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/xterm/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/xterm/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# Created by `pipx` on 2024-07-05 14:06:27
+export PATH="$PATH:/Users/xterm/.local/bin"

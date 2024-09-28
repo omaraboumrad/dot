@@ -21,7 +21,7 @@ vim.o.hidden = true
 vim.o.list = true
 vim.o.listchars = "eol:↓,trail:·"
 vim.o.expandtab = true
-vim.o.pastetoggle = "<F2>"
+-- vim.o.pastetoggle = "<F2>"
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.cursorline = true
@@ -34,6 +34,24 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 -- vim.o.termguicolors = true
 -- vim.o.background = 'dark'
+
+-- Folds
+vim.opt.foldcolumn = "0"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+
+vim.opt.foldnestmax = 3
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
+local function close_all_folds()
+  vim.api.nvim_exec2("%foldc!", { output = false })
+end
+local function open_all_folds()
+  vim.api.nvim_exec2("%foldo!", { output = false })
+end
+
 
 -- Global Keymaps
 vim.keymap.set('n', '<leader>o', '<cmd>e ~/.config/nvim/init.lua<CR>', { silent = true }) -- Open Config File
@@ -69,22 +87,21 @@ require('lazy').setup({
     opts = {}
   },
 
-  { -- Color Scheme
-    -- 'shaunsingh/nord.nvim',
-    -- 'navarasu/onedark.nvim',
-    -- 'arcticicestudio/nord-vim',
-    -- 'morhetz/gruvbox',
-    'catppuccin/nvim',
+  {
+    'kdheepak/monochrome.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'monochrome'
     end,
   },
 
   {  -- Fuzzy Finder
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.1',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
+    tag = '0.1.5',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
     config = function()
       vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = '[F]ind [F]iles' })
       vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = 'Live Grep'})
@@ -94,6 +111,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = 'Help Tags'})
       vim.keymap.set('n', '<leader>fc', '<cmd>Telescope git_commits<cr>', { desc = 'Git Commits'})
       vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = 'Key Maps'})
+
+      local function current_buffer_fuzz()
+        require('telescope.builtin').current_buffer_fuzzy_find()
+      end
+
+      vim.keymap.set("n", "<leader>fz", current_buffer_fuzz, { desc = "Fuzzy search current buffer" })
+
     end,
   },
 
@@ -110,7 +134,6 @@ require('lazy').setup({
         component_separators = '|',
         section_separators = '',
         globalstatus=true,
-        theme = 'catppuccin',
       },
       sections = {
         lualine_a = {},
@@ -199,19 +222,51 @@ require('lazy').setup({
   },
 
   {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  init = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-  end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    version = false, -- set this if you want to always pull the latest change
+    opts = {
+      provider="openai",
+      -- add any opts here
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
   }
-}
-
 }, {})
 
 -- LSP Configuration
@@ -225,7 +280,6 @@ local on_attach = function(_, bufnr)
 
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP: [R]e[n]ame'})
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP: [C]ode [A]ction'})
-
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP: [G]oto [D]efinition'})
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP: [G]oto [D]eclaration'})
   vim.keymap.set('n', '<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', { silent = true })
@@ -237,9 +291,11 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP: Hover Documentation'})
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP: Signature Documentation'})
   vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation'})
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'LSP: [W]orkspace [A]dd Folder'})
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'LSP: [W]orkspace [R]emove Folder'})
-  vim.keymap.set('n', '<leader>wl', (function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end), '[W]orkspace [L]ist Folders')
+
+  -- Figure out workspace folders at some point
+  -- vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'LSP: [W]orkspace [A]dd Folder'})
+  -- vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'LSP: [W]orkspace [R]emove Folder'})
+  -- vim.keymap.set('n', '<leader>wl', (function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end), '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -396,6 +452,7 @@ local actions = require "telescope.actions"
 local extra_actions = require "telescope-extra-actions"
 require('telescope').setup({
   defaults = {
+    file_ignore_patterns = { "node_modules", ".git", "_site", "env", "__pycache__" },
     mappings = {
       i = {
         ['<leader>p'] = require('telescope.actions.layout').toggle_preview
@@ -429,17 +486,19 @@ require('telescope').setup({
 
 require("telescope").load_extension "file_browser"
 
-local trouble = require("trouble.providers.telescope")
+local open_with_trouble = require("trouble.sources.telescope").open
+local add_to_trouble = require("trouble.sources.telescope").add
+
 local telescope = require("telescope")
 
-telescope.setup {
+telescope.setup({
   defaults = {
     mappings = {
-      i = { ["<c-t>"] = trouble.open_with_trouble },
-      n = { ["<c-t>"] = trouble.open_with_trouble },
+      i = { ["<c-t>"] = open_with_trouble },
+      n = { ["<c-t>"] = open_with_trouble },
     },
   },
-}
+})
 
 
 vim.cmd [[ set runtimepath^=~/.config/nvim/telescope-chdir.nvim ]]
