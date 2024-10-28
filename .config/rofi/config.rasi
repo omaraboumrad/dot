@@ -14,4 +14,4 @@ configuration {
 }
 
 
-@theme "~/.config/rofi/nord.rasi"
+@theme "~/.config/rofi/murz.rasi"
